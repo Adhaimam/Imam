@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imam - Senior Full Stack Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e27;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .logo-box {
+            display: inline-block;
+            border: 3px solid #00ff88;
+            padding: 20px 40px;
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            color: #00ff88;
+            text-shadow: 0 0 20px #00ff88;
+            background: rgba(0, 255, 136, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-size: 64px;
+            font-weight: bold;
+            letter-spacing: 10px;
+            color: #fff;
+            text-shadow: 0 0 30px #00ff88;
+            margin: 30px 0 20px 0;
+        }
+
+        .subtitle {
+            color: #00a8ff;
+            font-size: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            text-align: center;
+            margin: 50px 0;
+            position: sticky;
+            top: 20px;
+            background: rgba(10, 14, 39, 0.95);
+            padding: 20px;
+            border-radius: 50px;
+            border: 2px solid rgba(0, 255, 136, 0.2);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid #1a1f3a;
+            color: #00ff88;
+            padding: 14px 35px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            transition: all 0.3s;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #00ff88;
+            color: #0a0e27;
+            border-color: #00ff88;
+            box-shadow: 0 0 30px #00ff88;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            color: #00ff88;
+            font-size: 36px;
+            margin: 50px 0 40px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #00ff88;
+            display: inline-block;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .section-title::before {
+            content: '> ';
+        }
+
+        .terminal {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid #00ff88;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .code-line {
+            margin: 18px 0;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        .code-line::before {
+            content: '> ';
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .skill-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            padding: 30px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            border-color: #00ff88;
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4);
+        }
+
+        .skill-card h3 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .skill-bar-container {
+            margin: 15px 0;
+        }
+
+        .skill-name {
+            color: #aaa;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .skill-level {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ffd5);
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ff88;
+            transition: width 1s ease-out;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .project-icon {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 168, 255, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            color: #00ff88;
+            border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-card h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+
+        .project-card p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: #00ff88;
+            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.4);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #00ff88, transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 100px;
+            margin-bottom: 50px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 42px;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            background: #00ff88;
+            border: 4px solid #0a0e27;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00ff88;
+        }
+
+        .timeline-content {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-left: 4px solid #00ff88;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .timeline-content h3 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .timeline-content .period {
+            color: #00a8ff;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content ul {
+            color: #aaa;
+            padding-left: 20px;
+        }
+
+        .timeline-content li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 40px 60px;
+            text-align: center;
+            transition: all 0.3s;
+            min-width: 250px;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #00ff88;
+            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.5);
+        }
+
+        .contact-icon {
+            font-size: 64px;
+            color: #00ff88;
+            margin-bottom: 20px;
+        }
+
+        .contact-card h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        .contact-link {
+            color: #00a8ff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 40px;
+            }
+
+            .logo-box {
+                font-size: 32px;
+                padding: 15px 30px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                padding-left: 60px;
+            }
+
+            .timeline-marker {
+                left: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-box">IM</div>
+            <h1 class="main-title">[ IMAM ]</h1>
+            <p class="subtitle">// Senior Full Stack Developer</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" onclick="showSection('about')">About</button>
+            <button class="nav-btn" onclick="showSection('skills')">Skills</button>
+            <button class="nav-btn" onclick="showSection('projects')">Projects</button>
+            <button class="nav-btn" onclick="showSection('experience')">Experience</button>
+            <button class="nav-btn" onclick="showSection('contact')">Contact</button>
+        </nav>
+
+        <!-- About Section -->
+        <div id="about" class="section active">
+            <h2 class="section-title">SYSTEM.ABOUT</h2>
+            <div class="terminal">
+                <div class="code-line">console.log("Initializing Imam.profile...");</div>
+                <div class="code-line">Senior Full Stack Developer dengan 5+ tahun pengalaman dalam membangun solusi web dan mobile yang robust.</div>
+                <div class="code-line">Spesialisasi dalam high-performance API architectures dan real-time systems.</div>
+                <div class="code-line">Mission: Merging pixel-perfect design dengan solid engineering.</div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div id="skills" class="section">
+            <h2 class="section-title">SYSTEM.SKILLS</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3><i class="fas fa-code"></i> Programming</h3>
+                    <div class="skill-bar-container">
+                        <div class="skill-name">
+                            <span>VB.NET</span>
+                            <span class="skill-level">4/5</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-name">
+                            <span>PHP</span>
+                            <span class="skill-level">4/5</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-name">
+                            <span>HTML</span>
+                            <span class="skill-level">4/5</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3><i class="fas fa-database"></i> Database</h3>
+                    <div class="skill-bar-container">
+                        <div class="skill-name">
+                            <span>SQL Server</span>
+                            <span class="skill-level">4/5</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-name">
+                            <span>MySQL</span>
+                            <span class="skill-level">4/5</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3><i class="fas fa-mobile-alt"></i> Mobile</h3>
+                    <div class="skill-bar-container">
+                        <div class="skill-name">
+                            <span>Flutter</span>
+                            <span class="skill-level">3.5/5</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div id="projects" class="section">
+            <h2 class="section-title">SYSTEM.DEPLOYMENTS</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Workflow Kantor</h3>
+                        <p>Sistem manajemen workflow terintegrasi untuk meningkatkan efisiensi operasional perusahaan.</p>
+                        <div class="project-tags">
+                            <span class="tag">VB.NET</span>
+                            <span class="tag">SQL Server</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>RPA (Power Automate)</h3>
+                        <p>Implementasi RPA untuk otomasi proses bisnis menggunakan Microsoft Power Automate Desktop.</p>
+                        <div class="project-tags">
+                            <span class="tag">Power Automate</span>
+                            <span class="tag">RPA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Sistem Integrasi Database</h3>
+                        <p>Solusi integrasi multi-database dengan sinkronisasi real-time antar sistem.</p>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>HRIS</h3>
+                        <p>Human Resource Information System untuk manajemen karyawan dan payroll.</p>
+                        <div class="project-tags">
+                            <span class="tag">VB.NET</span>
+                            <span class="tag">SQL Server</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Inventory</h3>
+                        <p>Sistem manajemen inventory dengan tracking real-time dan reporting.</p>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-mobile"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Slik Mobile Marketing</h3>
+                        <p>Aplikasi mobile untuk marketing dan promosi dengan fitur tracking dan analytics.</p>
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <div id="experience" class="section">
+            <h2 class="section-title">SYSTEM.TIMELINE</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Senior Full Stack Developer</h3>
+                        <p class="period">PT. [Nama Perusahaan] | 2023 - Present</p>
+                        <ul>
+                            <li>[Deskripsi pekerjaan dan achievement]</li>
+                            <li>[Teknologi yang digunakan]</li>
+                            <li>[Project highlight]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Full Stack Developer</h3>
+                        <p class="period">PT. [Nama Perusahaan] | 2020 - 2023</p>
+                        <ul>
+                            <li>[Deskripsi pekerjaan dan achievement]</li>
+                            <li>[Teknologi yang digunakan]</li>
+                            <li>[Project highlight]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Web Developer</h3>
+                        <p class="period">PT. [Nama Perusahaan] | 2018 - 2020</p>
+                        <ul>
+                            <li>[Deskripsi pekerjaan dan achievement]</li>
+                            <li>[Teknologi yang digunakan]</li>
+                            <li>[Project highlight]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Junior Developer</h3>
+                        <p class="period">PT. [Nama Perusahaan] | 2016 - 2018</p>
+                        <ul>
+                            <li>[Deskripsi pekerjaan dan achievement]</li>
+                            <li>[Teknologi yang digunakan]</li>
+                            <li>[Project highlight]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact" class="section">
+            <h2 class="section-title">SYSTEM.CONNECT</h2>
+            <div class="contact-container">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3>Instagram</h3>
+                    <a href="https://instagram.com/yourusername" target="_blank" class="contact-link">@yourusername</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h3>LinkedIn</h3>
+                    <a href="https://linkedin.com/in/yourusername" target="_blank" class="contact-link">linkedin.com/in/yourusername</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 IMAM | ARCHIVED_IN_NEON - V.2.0.1</p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
